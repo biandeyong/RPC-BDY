@@ -6,6 +6,10 @@ import lombok.Data;
 
 import java.io.Serializable;
 
+/**
+ * 响应类
+ * @param <T>
+ */
 @Data
 public class RpcResponse<T> implements Serializable {
     /**

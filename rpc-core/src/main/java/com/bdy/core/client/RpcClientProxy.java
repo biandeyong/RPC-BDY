@@ -25,7 +25,8 @@ public class RpcClientProxy implements InvocationHandler {
     public <T> T getProxy(Class<T> clazz) {
         return (T) Proxy.newProxyInstance(clazz.getClassLoader(), new Class<?>[]{clazz}, this);
     }
-
+    //动态代理实现
+    //在动态代理对象方法执行时执行invoke方法
     @Override
     public Object invoke(Object proxy, Method method, Object[] args)  {
         RpcRequest rpcRequest = RpcRequest.builder()

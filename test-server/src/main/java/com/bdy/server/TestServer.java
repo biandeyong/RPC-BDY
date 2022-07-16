@@ -4,16 +4,19 @@ package com.bdy.server;
 import com.bdy.api.HelloService;
 import com.bdy.core.server.HelloServiceImpl;
 import com.bdy.core.server.RpcServer;
+import com.bdy.core.server.register.DefaultServiceRegistry;
+import com.bdy.core.server.register.ServiceRegistry;
 
-/**
- * 服务端测试类
- * 创建rpcserver，注册
- */
+
 public class TestServer {
     public static void main(String[] args) {
         HelloService helloService = new HelloServiceImpl();
-        RpcServer rpcServer = new RpcServer();
+        ServiceRegistry serviceRegistry = new DefaultServiceRegistry();
+        //可以注册多个服务在注册表
+        serviceRegistry.register(helloService);
+        //开启服务
+        new RpcServer(serviceRegistry).start(9000);
 
-        rpcServer.register(helloService, 9000);
+
     }
 }

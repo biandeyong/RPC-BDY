@@ -4,6 +4,10 @@ import lombok.Builder;
 import lombok.Data;
 
 import java.io.Serializable;
+
+/**
+ * 请求类
+ */
 @Data
 @Builder
 public class RpcRequest implements Serializable {

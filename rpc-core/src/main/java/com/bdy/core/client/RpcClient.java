@@ -19,14 +19,14 @@ public class RpcClient {
     private static final Logger logger = LoggerFactory.getLogger(RpcClient.class);
 
     public Object sendRequest(RpcRequest rpcRequest, String host, int port) {
-        //???
+        //创建socket连接
         try (Socket socket = new Socket(host, port)) {
             ObjectOutputStream objectOutputStream = new ObjectOutputStream(socket.getOutputStream());
             ObjectInputStream objectInputStream = new ObjectInputStream(socket.getInputStream());
             //向服务端传输RPCRequest对象
             objectOutputStream.writeObject(rpcRequest) ;
             objectOutputStream.flush();
-            //返回对象
+            //服务端返回结果
             return objectInputStream.readObject();
         } catch (IOException | ClassNotFoundException e) {
             logger.error("调用时有错误发生：", e);
