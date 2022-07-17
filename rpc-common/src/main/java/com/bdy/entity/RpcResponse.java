@@ -2,7 +2,10 @@ package com.bdy.entity;
 
 
 import com.bdy.enumeration.ResponseCode;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
 
@@ -12,14 +15,19 @@ import java.io.Serializable;
  */
 @Data
 public class RpcResponse<T> implements Serializable {
+
+    public RpcResponse() {}
+
     /**
      * 响应状态码
      */
     private Integer statusCode;
+
     /**
      * 响应状态补充信息
      */
     private String message;
+
     /**
      * 响应数据
      */
@@ -31,11 +39,12 @@ public class RpcResponse<T> implements Serializable {
         response.setData(data);
         return response;
     }
+
     public static <T> RpcResponse<T> fail(ResponseCode code) {
         RpcResponse<T> response = new RpcResponse<>();
         response.setStatusCode(code.getCode());
         response.setMessage(code.getMessage());
         return response;
     }
-}
 
+}

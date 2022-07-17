@@ -6,7 +6,7 @@ import com.bdy.enumeration.RpcError;
 /**
  * RPC调用异常
  *
- * @author ziyang
+ * @author bdy
  */
 public class RpcException extends RuntimeException {
 

@@ -1,0 +1,9 @@
+com\bdy\enumeration\RpcError.class
+com\bdy\exception\SerializeException.class
+com\bdy\enumeration\PackageType.class
+com\bdy\enumeration\SerializerCode.class
+com\bdy\entity\RpcResponse.class
+com\bdy\enumeration\ResponseCode.class
+com\bdy\entity\RpcRequest$RpcRequestBuilder.class
+com\bdy\entity\RpcRequest.class
+com\bdy\exception\RpcException.class
