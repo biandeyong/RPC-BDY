@@ -14,10 +14,15 @@ import java.io.Serializable;
  * @param <T>
  */
 @Data
+@NoArgsConstructor
 public class RpcResponse<T> implements Serializable {
+    //空参构造
+    //要实现反序列化必须实现空参构造
 
-    public RpcResponse() {}
-
+    /**
+     * 响应对应的请求号
+     */
+    private String requestId;
     /**
      * 响应状态码
      */
