@@ -4,6 +4,8 @@ import com.alibaba.nacos.api.exception.NacosException;
 import com.alibaba.nacos.api.naming.NamingFactory;
 import com.alibaba.nacos.api.naming.NamingService;
 import com.alibaba.nacos.api.naming.pojo.Instance;
+import com.bdy.core.loadbalancer.LoadBalancer;
+import com.bdy.core.loadbalancer.RandomLoadBalancer;
 import com.bdy.enumeration.RpcError;
 import com.bdy.exception.RpcException;
 import org.slf4j.Logger;
@@ -22,7 +24,7 @@ public class NacosServiceRegistry implements ServiceRegistry{
 
     private static final String SERVER_ADDR = "127.0.0.1:8848";
     private static final NamingService namingService;
-
+    private final LoadBalancer loadBalancer;
 
     static {
         try {
@@ -34,6 +36,9 @@ public class NacosServiceRegistry implements ServiceRegistry{
         }
     }
 
+    public NacosServiceRegistry(LoadBalancer loadBalancer) {
+        this.loadBalancer = new RandomLoadBalancer();
+    }
 
     @Override
     public void register(String serviceName, InetSocketAddress inetSocketAddress) {
@@ -52,7 +57,7 @@ public class NacosServiceRegistry implements ServiceRegistry{
             List<Instance> instances =  namingService.getAllInstances(serviceName);
             //这里为什么要get0
             //通过 getAllInstance 获取到某个服务的所有提供者列表后，需要选择一个，这里就涉及了负载均衡策略，这里我们先选择第 0 个，后面某节会详细讲解负载均衡。
-            Instance instance = instances.get(0);
+            Instance instance = loadBalancer.select(instances);
             return new InetSocketAddress(instance.getIp(), instance.getPort());
         } catch (NacosException e) {
             logger.error("获取服务时有错误发生:", e);

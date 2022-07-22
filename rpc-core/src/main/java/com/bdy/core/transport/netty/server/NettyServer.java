@@ -1,5 +1,6 @@
 package com.bdy.core.transport.netty.server;
 
+import com.bdy.core.hook.ShutdownHook;
 import com.bdy.core.provider.ServiceProvider;
 import com.bdy.core.provider.ServiceProviderImpl;
 import com.bdy.core.registry.NacosServiceRegistry;
@@ -72,6 +73,7 @@ public class NettyServer implements RpcServer {
                     });
             //绑定一个端口并且同步 生成了一个 ChannelFuture 对象 启动服务
             ChannelFuture future = serverBootstrap.bind(host,port).sync();//注册一个监听，当操作执行成功或失败时监听会自动触发注册的监听事件
+            ShutdownHook.getShutdownHook().addClearAllHook();
             future.channel().closeFuture().sync();//对关闭通道进行侦听
 
         } catch (InterruptedException e) {
